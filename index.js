@@ -1,3 +1,4 @@
+
 let userForm = document.getElementById("user-form");
 
 const retrieveEntries = () => {
