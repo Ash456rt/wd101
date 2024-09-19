@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container input[type="password"],
+        .form-container input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+   <div class="realative flex min-h-screen flex-col justify-center overflow-hidden py-6 bg-red-400">
+   <div
+class="relative bg-white px-6 pt-5 pb-5 shadow-xl ring-1 ring-gray-900/s sm:mx-auto sm:mx-w-lg sm:rounded-lg sm:px-10">
+<div class="mx-auto max-w-md">
+    <h2 class="text-3xl text-center font-bold leading-tight">Registarion form</h2>
+    <div class="divide-y divide-gray-300/50">
+        <div class="space-y=6 py-8 text-base leading-7 text-gray-600">
+            <form>
+                <label for="name" class="text-md w-40 inline-block font-medium leading-7 text-gray-700">Name</label>
+                <input required type="text" id="name" name="name" class="bg-gray-100 inline-block rounded-lg shadow-md px-4 py-3 ab-5 text-base leading-7 placeholder-g focus:invalid:border-pink-500 focus:invalid:ring-pink-580"placeholder="enter full name"></br>
+                <label for="email" class="text-md w-40 inline-block font-medium leading-7 text-gray-700">email</label>
+                <input required type="email" id="email" name="email" class="bg-gray-100 inline-block rounded-lg shadow-md px-4 py-3 ab-5 text-base leading-7 placeholder-g focus:invalid:border-pink-500 focus:invalid:ring-pink-580"placeholder="enter email"></br>
+                <label for="Password" class="text-md w-40 inline-block font-medium leading-7 text-gray-700">Password</label>
+                <input required type="password" id="password" name="password" class="bg-gray-100 inline-block rounded-lg shadow-md px-4 py-3 ab-5 text-base leading-7 placeholder-g focus:invalid:border-pink-500 focus:invalid:ring-pink-580"placeholder="enter password"></br>
+                <label for="dob" class="text-md w-40 inline-block font-medium leading-7 text-gray-700">dob</label>
+                <input required type="dob" id="dob" name="dob" class="bg-gray-100 inline-block rounded-lg shadow-md px-4 py-3 ab-5 text-base leading-7 placeholder-g focus:invalid:border-pink-500 focus:invalid:ring-pink-580"<br><br>
+                <label for="Accept and Terms" class="text-md w-40 inline-block font-medium leading-7 text-gray-700">Accept and Terms</label>
+                <input  type="checkbox" id="accept terms" name="accept terms" class="bg-gray-100 inline-block rounded-lg shadow-md px-4 py-3 ab-5 text-base leading-6 placeholder-g focus:invalid:border-pink-500 focus:invalid:ring-pink-500"<br><br>
+                <button type="submit" class="w-fit rounded-lg shadow-md px-4 py-3 bg-green-500">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+   </div>
+   <div
+    class="related bg-white px-6 mt-5 pt-6 shadow-xl ring-1 ring-gray-900/s sm:mx-auto sm:rounded-lg sm:px-10">
+    <div class="mx-auto">
+    <h2 class="tect-3xl text-center font-bold leading-tight">Entries</h2>
+    <div class="divide-y divide-gray-360/50"id="user-entries"></div>
+   </div>
+   </div>
+</div>
+ <script src="./index.js"></script>
+</body>
+</html>
