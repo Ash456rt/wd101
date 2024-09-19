@@ -15,31 +15,13 @@ let userEntries = retrieveEntries();
 const displayEntries = () => {
     const entries = retrieveEntries();
 
-    /*
-    Structure:
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>DOB</th>
-            <th>Accepted Terms</th>
-        </tr>
-        <tr>
-            <td>Johan Libert</td>
-            <td>johan@libert.com</td>
-            ...
-        </tr>
-    </table>
-    */
-
     const tableEntries = entries
         .map((entry) => {
             const nameCell = `<td class='border px-4 py-2'>${entry.name}</td>`;
             const emailCell = `<td class='border px-4 py-2'>${entry.email}</td>`;
             const passwordCell = `<td class='border px-4 py-2'>${entry.password}</td>`;
             const dobCell = `<td class='border px-4 py-2'>${entry.dob}</td>`;
-            const acceptTermsCell = `<td class='border px-4 py-2'>${entry.AcceptandTerms}</td>`;
+            const acceptTermsCell = `<td class='border px-4 py-2'>${entry.acceptTerms}</td>`;
             const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${acceptTermsCell}</tr>`;
             return row;
         })
@@ -75,7 +57,7 @@ const saveUserForm = (event) => {
         email,
         password,
         dob,
-        AcceptandTerms: acceptTerms,
+        acceptTerms,
     };
 
     userEntries.push(entry);
