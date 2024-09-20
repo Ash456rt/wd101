@@ -90,6 +90,9 @@ const saveUserForm = (event) => {
 
     // Update the table with new entry immediately
     displayEntries();
+
+    // Reset form after submission
+    userForm.reset();
 };
 
 // Attach form submission handler
