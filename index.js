@@ -12,6 +12,7 @@ const calculateAge = (dob) => {
     return age;
 };
 
+// Retrieve entries from localStorage
 const retrieveEntries = () => {
     let entries = localStorage.getItem("user-entries");
     if (entries) {
@@ -22,8 +23,9 @@ const retrieveEntries = () => {
     return entries;
 };
 
-let userEntries = retrieveEntries();
+let userEntries = retrieveEntries(); // Initialize with existing entries
 
+// Display entries in the table
 const displayEntries = () => {
     const entries = retrieveEntries();
 
@@ -55,6 +57,7 @@ const displayEntries = () => {
     details.innerHTML = table;
 };
 
+// Save form data to localStorage and update the table
 const saveUserForm = (event) => {
     event.preventDefault();
 
@@ -79,11 +82,19 @@ const saveUserForm = (event) => {
         acceptTerms,
     };
 
+    // Add new entry to the list of entries
     userEntries.push(entry);
+    
+    // Store updated entries back to localStorage
     localStorage.setItem("user-entries", JSON.stringify(userEntries));
 
+    // Update the table with new entry immediately
     displayEntries();
 };
 
+// Attach form submission handler
 userForm.addEventListener("submit", saveUserForm);
+
+// Display entries when the page loads
 displayEntries();
+
