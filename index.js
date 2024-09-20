@@ -53,6 +53,18 @@ const saveUserForm = (event) => {
   const dob = document.getElementById("dob").value;
   const acceptTerms = document.getElementById("terms").checked;
 
+  const dobDate = new Date(dob);
+  const today = new Date();
+  const age = today.getFullYear() - dobDate.getFullYear();
+  const m = today.getMonth() - dobDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) {
+    age--;
+  }
+  if (age < 18 || age > 55) {
+    alert('You must be between 18 and 55 years old to register.');
+    return;
+  }
+
   const entry = {
     name,
     email,
@@ -70,4 +82,4 @@ const saveUserForm = (event) => {
 };
 
 userForm.addEventListener("submit", saveUserForm);
-displayEntries(); // Call displayEntries initially to show any existing entries
+displayEntries(); // Call displayEntries to show existing entries
