@@ -1,38 +1,61 @@
 let userForm = document.getElementById("user-form");
 
-// Function to retrieve entries from local storage
 const retrieveEntries = () => {
   let entries = localStorage.getItem("user-entries");
-  return entries ? JSON.parse(entries) : [];
+  if (entries) {
+    entries = JSON.parse(entries);
+  } else {
+    entries = [];
+  }
+  return entries;
 };
 
-// Function to display entries in the table
+let userEntries = retrieveEntries();
+
 const displayEntries = () => {
   const entries = retrieveEntries();
-  let tableEntries = '';
-
+  const tableEntries = entries
+    .map((entry) => {
+  let tableEntries = `
+    <tr>
+      <th class="px-4 py-2">Name</th>
+      <th class="px-4 py-2">Email</th>
+      <th class="px-4 py-2">Password</th>
+      <th class="px-4 py-2">DOB</th>
+      <th class="px-4 py-2">Accepted Terms</th>
+    </tr>
+  `;
   if (entries.length > 0) {
     tableEntries += entries.map((entry) => {
-      const passwordCell = `<td>${entry.password}</td>`; // Consider hiding this
-      return `
-        <tr>
-          <td>${entry.name}</td>
-          <td>${entry.email}</td>
-          ${passwordCell}
-          <td>${entry.dob}</td>
-          <td>${entry.acceptTerms ? 'Yes' : 'No'}</td>
-        </tr>
-      `;
+      const nameCell = `<td class='border px-4 py-2'>${entry.name}</td>`;
+      const emailCell = `<td class='border px-4 py-2'>${entry.email}</td>`;
+      const passwordCell = `<td class='border px-4 py-2'>${entry.password}</td>`;
+      const dobCell = `<td class='border px-4 py-2'>${entry.dob}</td>`;
+      const acceptTermsCell = `<td class='border px-4 py-2'>${entry.acceptTerms}</td>`;
+      const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${acceptTermsCell}</tr>`;
+      return row;
+    })
+    .join("\n");
     }).join("\n");
   }
-
-  document.querySelector("#user-entries tbody").innerHTML = tableEntries;
+  const table = `
+    <table class="table-auto w-full">
+      <tr>
+        <th class="px-4 py-2">Name</th>
+        <th class="px-4 py-2">Email</th>
+        <th class="px-4 py-2">Password</th>
+        <th class="px-4 py-2">DOB</th>
+        <th class="px-4 py-2">Accepted Terms</th>
+      </tr>
+      ${tableEntries}
+    </table>
+  `;
+  let details = document.getElementById("user-entries");
+  details.innerHTML = table;
 };
 
-// Function to save user form data
 const saveUserForm = (event) => {
   event.preventDefault();
-
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -42,14 +65,11 @@ const saveUserForm = (event) => {
   const dobDate = new Date(dob);
   const today = new Date();
   const age = today.getFullYear() - dobDate.getFullYear();
-
-  // Validate age
-  if (age < 18 || age > 55) {
+  const isBetween18And55 = age >= 18 && age <= 55;
+  if (!isBetween18And55) {
     alert("You must be between 18 and 55 years old to register.");
     return;
   }
-
-  // Create an entry object
   const entry = {
     name,
     email,
@@ -57,16 +77,17 @@ const saveUserForm = (event) => {
     dob,
     acceptTerms,
   };
-
-  let userEntries = retrieveEntries();
+  userEntries = retrieveEntries(); // Get the latest entries from local storage
+  userEntries = retrieveEntries();
   userEntries.push(entry);
   localStorage.setItem("user-entries", JSON.stringify(userEntries));
+  displayEntries(); // Call displayEntries to show the newly added entry
+  userForm.reset(); // Reset the form after submission
   displayEntries();
   userForm.reset();
 };
 
-// Add event listener for form submission
 userForm.addEventListener("submit", saveUserForm);
-
-// Display entries on initial load
+displayEntries(); // Call displayEntries initially to show any existing entries
+     
 displayEntries();
