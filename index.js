@@ -1,6 +1,6 @@
 let userForm = document.getElementById("user-form");
 
-// Function to calculate the user's age
+// Function to calculate the user's age based on date of birth
 const calculateAge = (dob) => {
     const birthDate = new Date(dob);
     const today = new Date();
