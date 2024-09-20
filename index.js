@@ -14,19 +14,9 @@ let userEntries = retrieveEntries();
 
 const displayEntries = () => {
   const entries = retrieveEntries();
+
   const tableEntries = entries
     .map((entry) => {
-  let tableEntries = `
-    <tr>
-      <th class="px-4 py-2">Name</th>
-      <th class="px-4 py-2">Email</th>
-      <th class="px-4 py-2">Password</th>
-      <th class="px-4 py-2">DOB</th>
-      <th class="px-4 py-2">Accepted Terms</th>
-    </tr>
-  `;
-  if (entries.length > 0) {
-    tableEntries += entries.map((entry) => {
       const nameCell = `<td class='border px-4 py-2'>${entry.name}</td>`;
       const emailCell = `<td class='border px-4 py-2'>${entry.email}</td>`;
       const passwordCell = `<td class='border px-4 py-2'>${entry.password}</td>`;
@@ -36,8 +26,7 @@ const displayEntries = () => {
       return row;
     })
     .join("\n");
-    }).join("\n");
-  }
+
   const table = `
     <table class="table-auto w-full">
       <tr>
@@ -50,26 +39,20 @@ const displayEntries = () => {
       ${tableEntries}
     </table>
   `;
+
   let details = document.getElementById("user-entries");
   details.innerHTML = table;
 };
 
 const saveUserForm = (event) => {
   event.preventDefault();
+
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const dob = document.getElementById("dob").value;
   const acceptTerms = document.getElementById("terms").checked;
 
-  const dobDate = new Date(dob);
-  const today = new Date();
-  const age = today.getFullYear() - dobDate.getFullYear();
-  const isBetween18And55 = age >= 18 && age <= 55;
-  if (!isBetween18And55) {
-    alert("You must be between 18 and 55 years old to register.");
-    return;
-  }
   const entry = {
     name,
     email,
@@ -77,17 +60,14 @@ const saveUserForm = (event) => {
     dob,
     acceptTerms,
   };
+
   userEntries = retrieveEntries(); // Get the latest entries from local storage
-  userEntries = retrieveEntries();
   userEntries.push(entry);
   localStorage.setItem("user-entries", JSON.stringify(userEntries));
+
   displayEntries(); // Call displayEntries to show the newly added entry
   userForm.reset(); // Reset the form after submission
-  displayEntries();
-  userForm.reset();
 };
 
 userForm.addEventListener("submit", saveUserForm);
 displayEntries(); // Call displayEntries initially to show any existing entries
-     
-displayEntries();
