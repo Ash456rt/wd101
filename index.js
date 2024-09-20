@@ -1,50 +1,38 @@
 let userForm = document.getElementById("user-form");
 
+// Function to retrieve entries from local storage
 const retrieveEntries = () => {
   let entries = localStorage.getItem("user-entries");
-  if (entries) {
-    entries = JSON.parse(entries);
-  } else {
-    entries = [];
-  }
-  return entries;
+  return entries ? JSON.parse(entries) : [];
 };
 
-let userEntries = retrieveEntries();
-
+// Function to display entries in the table
 const displayEntries = () => {
   const entries = retrieveEntries();
-  let tableEntries = `
-    <tr>
-      <th class="px-4 py-2">Name</th>
-      <th class="px-4 py-2">Email</th>
-      <th class="px-4 py-2">Password</th>
-      <th class="px-4 py-2">DOB</th>
-      <th class="px-4 py-2">Accepted Terms</th>
-    </tr>
-  `;
+  let tableEntries = '';
+
   if (entries.length > 0) {
     tableEntries += entries.map((entry) => {
-      const nameCell = `<td class='border px-4 py-2'>${entry.name}</td>`;
-      const emailCell = `<td class='border px-4 py-2'>${entry.email}</td>`;
-      const passwordCell = `<td class='border px-4 py-2'>${entry.password}</td>`;
-      const dobCell = `<td class='border px-4 py-2'>${entry.dob}</td>`;
-      const acceptTermsCell = `<td class='border px-4 py-2'>${entry.acceptTerms}</td>`;
-      const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${acceptTermsCell}</tr>`;
-      return row;
+      const passwordCell = `<td>${entry.password}</td>`; // Consider hiding this
+      return `
+        <tr>
+          <td>${entry.name}</td>
+          <td>${entry.email}</td>
+          ${passwordCell}
+          <td>${entry.dob}</td>
+          <td>${entry.acceptTerms ? 'Yes' : 'No'}</td>
+        </tr>
+      `;
     }).join("\n");
   }
-  const table = `
-    <table class="table-auto w-full">
-      ${tableEntries}
-    </table>
-  `;
-  let details = document.getElementById("user-entries");
-  details.innerHTML = table;
+
+  document.querySelector("#user-entries tbody").innerHTML = tableEntries;
 };
 
+// Function to save user form data
 const saveUserForm = (event) => {
   event.preventDefault();
+
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -54,13 +42,14 @@ const saveUserForm = (event) => {
   const dobDate = new Date(dob);
   const today = new Date();
   const age = today.getFullYear() - dobDate.getFullYear();
-  const isBetween18And55 = age >= 18 && age <= 55;
 
-  if (!isBetween18And55) {
+  // Validate age
+  if (age < 18 || age > 55) {
     alert("You must be between 18 and 55 years old to register.");
     return;
   }
 
+  // Create an entry object
   const entry = {
     name,
     email,
@@ -68,12 +57,16 @@ const saveUserForm = (event) => {
     dob,
     acceptTerms,
   };
-  userEntries = retrieveEntries();
+
+  let userEntries = retrieveEntries();
   userEntries.push(entry);
   localStorage.setItem("user-entries", JSON.stringify(userEntries));
   displayEntries();
   userForm.reset();
 };
 
+// Add event listener for form submission
 userForm.addEventListener("submit", saveUserForm);
+
+// Display entries on initial load
 displayEntries();
